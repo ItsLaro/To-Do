@@ -27,10 +27,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         /**
-        * @return ViewHolder holding the instance of one rendered 'View'
+        * @return ViewHolder holding the instance of one rendered layout containing 'Views'
         */
 
-        //Inflate ('render') the single view element.
+        //Inflate ('render') the single view element's layout.
         View inflatedElement = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
 
         ViewHolder elementHolder = new ViewHolder(inflatedElement);
@@ -59,9 +59,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
     class ViewHolder extends RecyclerView.ViewHolder{
         /**
          * Class composition.
-         * The ViewHolder class
+         * The ViewHolder class defines the data that will be inserted into each ViewHolder instance.
          */
-
 
         TextView elementView;
 
@@ -72,7 +71,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
 
         public void bind(String element){
             elementView.setText(element);
-
         }
     }
 
