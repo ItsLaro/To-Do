@@ -1,9 +1,12 @@
 package com.example.todo;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Listeners
         addBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Listener for button tap. Adds item to list.
+             */
+
             @Override
             public void onClick(View view) {
                addItem(editItem.getText().toString(), itemsAdapter);
@@ -56,6 +63,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        editItem.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            /**
+             * Listener for 'DONE' press on keyboard from the editText. Adds items to list.
+             */
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                    addItem(editItem.getText().toString(), itemsAdapter);
+                    editItem.setText("");
+                    Toast.makeText(getApplicationContext(), "New item added", Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     //CRUD Operations
