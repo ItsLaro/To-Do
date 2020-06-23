@@ -1,6 +1,6 @@
-# Project 1 - **Next App**
+# Project 1 - **Next**
 
-**Next App** is an android app that allows building a todo list and basic todo items management functionality including adding new items and deleting an existing item.
+**Next** is an android app that allows building a todo list and basic todo items management functionality including adding new items and deleting an existing item.
 
 Submitted by: **Ivan A. Reyes**
 
