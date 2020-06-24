@@ -18,14 +18,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
      */
 
     List<String> elements;
+    OnClickListener clickListener;
     OnLongClickListener longClickListener;
 
+
+    public interface  OnClickListener{
+        void onItemClick(int position);
+    }
     public interface OnLongClickListener{
         void onItemLongClick(int position);
     }
 
-    public ItemsAdapter(List<String> listElements, OnLongClickListener longClickListener) {
+    public ItemsAdapter(List<String> listElements, OnClickListener clickListener, OnLongClickListener longClickListener) {
         elements = listElements;
+        this.clickListener = clickListener;
         this.longClickListener = longClickListener;
     }
 
@@ -68,18 +74,26 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
          * The ViewHolder class defines the data that will be inserted into each ViewHolder instance.
          */
 
-        TextView elementView;
+        TextView textViewElement;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            elementView = itemView.findViewById(android.R.id.text1);
+            textViewElement = itemView.findViewById(android.R.id.text1);
         }
 
-        public void bind(String textViewElement){
-            elementView.setText(textViewElement);
+        public void bind(String textElement){
+            textViewElement.setText(textElement);
 
-            //Binds listener for long press to each ViewHolder
-            elementView.setOnLongClickListener(new View.OnLongClickListener(){
+            //Binds listener for tap to any ViewHolder
+            textViewElement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onItemClick(getAdapterPosition());
+                }
+            });
+
+            //Binds listener for long press to any ViewHolder
+            textViewElement.setOnLongClickListener(new View.OnLongClickListener(){
                 @Override
                 public boolean onLongClick(View view) {
                     //Notifies listener about the position of long-pressed item.

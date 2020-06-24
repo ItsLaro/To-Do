@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Adapter
+        ItemsAdapter.OnClickListener onClickListener = new ItemsAdapter.OnClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.i("MainActivity", "Tap at " + position); //TODO: Summon new activity
+            }
+        };
+
         ItemsAdapter.OnLongClickListener onLongClickListener =  new ItemsAdapter.OnLongClickListener(){
             @Override
             public void onItemLongClick(int position) {
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        itemsAdapter = new ItemsAdapter(items, onLongClickListener);
+        itemsAdapter = new ItemsAdapter(items, onClickListener, onLongClickListener);
         recView1.setAdapter(itemsAdapter);
         recView1.setLayoutManager(new LinearLayoutManager(this));
 
