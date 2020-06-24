@@ -1,5 +1,6 @@
 package com.example.todo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,6 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    public static final String KEY_ITEM_TEXT = "item_text";
+    public static final String KEY_ITEM_POSITION = "item_position";
+    public static final int  EDIT_TEXT_CODE = 1;
 
     private List<String> items;
 
@@ -53,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
         ItemsAdapter.OnClickListener onClickListener = new ItemsAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.i("MainActivity", "Tap at " + position); //TODO: Summon new activity
+                Intent editIntent = new Intent(MainActivity.this, EditActivity.class);
+
+                //Passing data to the intent
+                editIntent.putExtra(KEY_ITEM_TEXT, items.get(position));
+                editIntent.putExtra(KEY_ITEM_POSITION, position);
+
+                startActivityForResult(editIntent, EDIT_TEXT_CODE);
             }
         };
 
@@ -116,6 +128,25 @@ public class MainActivity extends AppCompatActivity {
         items.remove(position);
         saveItems();
         adapter.notifyItemRemoved(position);
+    }
+
+
+    //Activities
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK && requestCode ==EDIT_TEXT_CODE){
+            String updatedText = data.getStringExtra(KEY_ITEM_TEXT);
+            int updatedItemPosition = data.getExtras().getInt(KEY_ITEM_POSITION);
+
+            items.set(updatedItemPosition, updatedText);
+            itemsAdapter.notifyItemChanged(updatedItemPosition);
+
+            saveItems();
+            Toast.makeText(getApplicationContext(), "Item updated succesfully", Toast.LENGTH_SHORT);
+        }
+        else{
+            Log.w("MainActivity", "Unknown call from EditActivity Result");
+        }
     }
 
     //IO
