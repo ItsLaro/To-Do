@@ -46,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recView1 = findViewById(R.id.recView1);
 
         //Data
-        items = new ArrayList<>();
-        items.add("Go to the theater");
-        items.add("Visit my grandmother");
-        items.add("Vacation to Punta Cana");
+        loadItems();
 
 
         //Adapter
@@ -105,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
     //CRUD Operations
     protected void addItem(String newItem, ItemsAdapter adapter){
         items.add(newItem);
+        saveItems();
     }
 
     protected void deleteItem(int position, ItemsAdapter adapter){
         items.remove(position);
+        saveItems();
         adapter.notifyItemRemoved(position);
     }
 
@@ -119,16 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadItems(){
         try {
-            items = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
+            this.items = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
         } catch (IOException e) {
             Log.e("MainActivty", "Error reading items,", e);
-            items = new ArrayList<>(); //start from scratch if no file is found.
+            this.items = new ArrayList<>(); //start from scratch if no file is found.
         }
     }
 
     private void saveItems(){
         try {
-            FileUtils.writeLines(getDataFile(), items);
+            FileUtils.writeLines(getDataFile(), this.items);
         } catch (IOException e) {
             Log.e("MainActivty", "Error saving items,", e);
             Toast.makeText(getApplicationContext(), "Could not save items properly", Toast.LENGTH_SHORT).show();
