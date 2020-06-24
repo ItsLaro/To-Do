@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button addBtn;
     EditText editItem;
     RecyclerView recView1;
+    ItemsAdapter itemsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,20 @@ public class MainActivity extends AppCompatActivity {
         items.add("Visit my grandmother");
         items.add("Vacation to Punta Cana");
 
+
         //Adapter
-        final ItemsAdapter itemsAdapter = new ItemsAdapter(items);
+        ItemsAdapter.OnLongClickListener onLongClickListener =  new ItemsAdapter.OnLongClickListener(){
+            @Override
+            public void onItemLongClick(int position) {
+                deleteItem(position, itemsAdapter);
+                Toast.makeText(getApplicationContext(), "Item was removed", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        itemsAdapter = new ItemsAdapter(items, onLongClickListener);
         recView1.setAdapter(itemsAdapter);
         recView1.setLayoutManager(new LinearLayoutManager(this));
+
 
         //Listeners
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +99,10 @@ public class MainActivity extends AppCompatActivity {
     //CRUD Operations
     protected void addItem(String newItem, ItemsAdapter adapter){
         items.add(newItem);
-        adapter.notifyItemInserted(items.size()-1);
+    }
 
+    protected void deleteItem(int position, ItemsAdapter adapter){
+        items.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 }
