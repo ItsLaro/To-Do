@@ -51,10 +51,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
          */
 
         //Grabs element from the instance variable elements
-        String element = elements.get(position);
+        String textElement = elements.get(position);
 
         //Binds data to the corresponding ViewHolder
-        holder.bind(element);
+        holder.bind(textElement);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
             elementView = itemView.findViewById(android.R.id.text1);
         }
 
-        public void bind(String element){
-            elementView.setText(element);
+        public void bind(String textViewElement){
+            elementView.setText(textViewElement);
 
             //Binds listener for long press to each ViewHolder
             elementView.setOnLongClickListener(new View.OnLongClickListener(){
