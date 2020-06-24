@@ -4,7 +4,7 @@
 
 Submitted by: **Ivan A. Reyes**
 
-Time spent: **0.1** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
