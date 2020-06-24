@@ -22,3 +22,8 @@ The following **additional** features are implemented:
 
 * [x] User can add items by typing 'Enter/Done' on keyboard
 * [x] User is unable to add 'empty' items by accident
+
+## Demo
+<p align="center">
+  <img src= Demo/ToDoDemo.gif width="300">
+</p>
