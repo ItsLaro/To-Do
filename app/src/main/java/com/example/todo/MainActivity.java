@@ -120,8 +120,13 @@ public class MainActivity extends AppCompatActivity {
 
     //CRUD Operations
     protected void addItem(String newItem, ItemsAdapter adapter){
-        items.add(newItem);
-        saveItems();
+        if(newItem == null || newItem.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Item needs description", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            items.add(newItem);
+            saveItems();
+        }
     }
 
     protected void deleteItem(int position, ItemsAdapter adapter){
