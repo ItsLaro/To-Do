@@ -1,6 +1,7 @@
 package com.example.todo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,6 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,5 +110,28 @@ public class MainActivity extends AppCompatActivity {
     protected void deleteItem(int position, ItemsAdapter adapter){
         items.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    //IO
+    private File getDataFile(){
+        return new File(getFilesDir(), "data.txt");
+    }
+
+    private void loadItems(){
+        try {
+            items = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
+        } catch (IOException e) {
+            Log.e("MainActivty", "Error reading items,", e);
+            items = new ArrayList<>(); //start from scratch if no file is found.
+        }
+    }
+
+    private void saveItems(){
+        try {
+            FileUtils.writeLines(getDataFile(), items);
+        } catch (IOException e) {
+            Log.e("MainActivty", "Error saving items,", e);
+            Toast.makeText(getApplicationContext(), "Could not save items properly", Toast.LENGTH_SHORT).show();
+        }
     }
 }
