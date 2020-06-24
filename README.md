@@ -20,5 +20,5 @@ The following **stretch** features are implemented:
 
 The following **additional** features are implemented:
 
-* [x] User can add items by type 'Enter/Done' on keyboard
+* [x] User can add items by typing 'Enter/Done' on keyboard
 * [ ] User is unable to add 'empty' items by accident
